@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <button class="btn btn-primary my-1 mx-auto" onclick="loadBooks()"> Load Books</button>
+        </div>
+        <div id="book-wrapper" class="row">
+
+        </div>
+    </div>
+
+    <script>
+
+        const bookWrapper = document.querySelector("#book-wrapper")
+
+        function loadBooks() {
+            console.log("Loading books...")
+
+            fetch("https://striveschool-api.herokuapp.com/books")
+                .then(response => {
+                    console.log(response.status)
+                    return response.json()
+                })
+                .then(books => {
+                    for (const book of books) {
+                        bookWrapper.innerHTML += `
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <img src=${book.img} alt="" class="img-fluid">
+                                <h3>${book.title}</h3>
+                                <span class="badge badge-pill badge-dark">${book.category}</span>
+                                <p>${book.price}</p>
+                            </div>
+                        `
+                    }
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

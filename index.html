@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button onclick="loadUser()">Load user</button>
+
+    <div class="email"></div>
+    <img src="" alt="" class="src">
+
+
+    <script>
+        function loadUser() {
+            const myPromise = fetch("https://randomuser.me/api")
+
+            console.log(myPromise)
+
+            myPromise
+                .then(response => {
+                    console.log(response)
+                    console.log(response.body)
+                    return response.json();
+                })
+                .then(result => {
+                    console.log(result)
+                    console.log("Dom manipulation...")
+
+                    // DOM Manipulation
+                    const user = result.results[0];
+                    document.querySelector(".email").innerHTML = user.email
+                    document.querySelector("img").src = user.picture.large
+                })
+                .catch(error => { // new Error("whatever mckesuaidfgt")
+                    console.log("Woha! There is an error.")
+                    console.log(error)
+                })
+        }
+    </script>
+</body>
+
+</html>
